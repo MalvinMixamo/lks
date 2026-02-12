@@ -54,7 +54,7 @@ export default function DetailFilm(){
           {/* Poster (Kiri) */}
           <div className="hidden md:block bg-gray-800 rounded-lg aspect-2/3 overflow-hidden">
              <img 
-               src="https://kaltimtoday.co/wp-content/uploads/2023/09/the-conjuring-universe-650137a2e104a.jpg" 
+               src={data.poster}
                alt="Poster" 
                className="w-full h-full object-cover"
              />

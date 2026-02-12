@@ -7,7 +7,13 @@ import { useRef, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 function ManageUser({ nama, className, role}){
-
+    const [ films, setFilms ] = useState([])
+    useEffect(() => {fetchFilm()}, [])
+    const fetchFilm = async () => {
+      const res = await fetch('/api/film')
+      const data = await res.json()
+      setFilms(data)
+    } 
     const handleToggleBan = async (userId, currentStatus) => {
         const newStatus = currentStatus === 'Banned' ? 'Active' : 'Banned'
         const isBlocked = newStatus === 'Banned' ? 1 : 0;
@@ -35,12 +41,7 @@ function ManageUser({ nama, className, role}){
     useEffect(() => { fetchUsers() }, [])
     return (
     <div className="min-h-screen bg-slate-950 text-white flex font-sans">
-      {/* --- SIDEBAR --- */}
-      
-
-      {/* --- MAIN CONTENT --- */}
       <main className="flex-1 p-8 overflow-y-auto">
-        {/* Header */}
         <header className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-2xl font-bold">Admin Dashboard</h2>
@@ -52,10 +53,9 @@ function ManageUser({ nama, className, role}){
           </div>
         </header>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
           {[
-            { label: 'Total Movies', val: '1,240', color: 'text-blue-400' },
+            { label: 'Total Movies', val: films.length, color: 'text-blue-400' },
             { label: 'Active Users', val: '8,502', color: 'text-green-400' },
             { label: 'Total Reviews', val: '45.2k', color: 'text-yellow-400' },
             { label: 'Banned Users', val: '12', color: 'text-red-400' }
@@ -67,7 +67,6 @@ function ManageUser({ nama, className, role}){
           ))}
         </div>
 
-        {/* User Management Table */}
         <section className="bg-slate-900 border border-slate-800 rounded-2xl overflow-scroll md:overflow-hidden">
           <div className="p-6 border-b border-slate-800 flex justify-between items-center">
             <h3 className="text-lg font-bold">User Management</h3>

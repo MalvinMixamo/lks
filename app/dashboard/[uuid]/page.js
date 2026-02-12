@@ -21,32 +21,15 @@ function Home({ nama, className, role}){
   const [isAddOpen, setIsAddOpen] = useState(false);
 
   const openEditModal = (film) => {
-      setSelectedFilm(film);
-      setIsModalOpen(true);
-  };
+      setSelectedFilm(film)
+      setIsModalOpen(true)
+  }
 
-  const openAddModal = () => {
-    setSelectedFilm({
-        judul: "",
-        genre: "",
-        sinopsis: "",
-        trailer: "",
-        poster: "",
-        kategori: "",
-        casting: "",
-        durasi: "",
-        tahun_rilis: "",
-        trivia: ""
-    })
-    setIsModalOpen(true);
-};
   const handleDelete = async (id) => {
     if (!confirm("Yakin mau hapus film ini bray?")) return
     const res = await fetch(`/api/film/delete?id=${id}`, { 
         method: 'DELETE' 
-    });
-    
-    const data = await res.json()
+    })
     
     if (res.ok) {
         setFilms((prev) => prev.filter((film) => film.id !== id))

@@ -14,6 +14,7 @@ export default function Page(){
     
     }
   }
+  
   useEffect(() => {fetchData()}, [])
   const filteredItems = film.filter(item => 
     selectedGenre === "" ? true : item.genre.toLowerCase() === selectedGenre.toLowerCase()
@@ -43,7 +44,7 @@ export default function Page(){
           <label htmlFor="genre">Genre :</label>
           <select className="bg-slate-500" name="genre" id="genre" onChange={(e) => setSelectedGenre(e.target.value)}>
             <option value="">All</option>
-            <option value="romane">Romance</option>
+            <option value="Romance">Romance</option>
             <option value="Horror">Horror</option>
             <option value="comedy">Comedy</option>
           </select>
@@ -53,9 +54,7 @@ export default function Page(){
         </div>
       </nav>
 
-      {/* --- HERO SECTION --- */}
       <section className="relative h-[70vh] flex items-center px-8 lg:px-16 overflow-hidden">
-        {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
             src="/background.png" 
@@ -83,16 +82,13 @@ export default function Page(){
         </div>
       </section>
 
-      {/* --- MOVIE GRID SECTION --- */}
       <main className="px-8 lg:px-16 py-12">
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-2xl font-bold border-l-4 border-yellow-500 pl-4">Trending Now</h3>
           <a href="#" className="text-sm text-yellow-500 font-semibold hover:underline">View All</a>
         </div>
 
-        {/* List Film (Grid) */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-          {/* Card Start (Bisa kamu looping nanti) */}
           {filteredItems.map((item) => (
             <Link href={`/film/${item.id}`} key={item.id} className="group cursor-pointer">
               <div className="relative aspect-2/3 rounded-xl overflow-hidden mb-3 border border-slate-800">
@@ -107,14 +103,12 @@ export default function Page(){
               <p className="text-xs text-slate-500 mt-1">{item.tahun_rilis} • {item.genre}</p>
             </Link>
           ))}
-          {/* Card End */}
         </div>
       </main>
 
-      {/* --- FOOTER --- */}
       <footer className="border-t border-slate-900 py-12 px-8 text-center text-slate-500 text-sm">
         <p>© 2026 FILMKu. Built with passion for Cinema bray.</p>
       </footer>
     </div>
-);
+)
 }
