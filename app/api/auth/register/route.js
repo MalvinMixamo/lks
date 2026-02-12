@@ -4,8 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
     const { fullname, username, password } = await req.json()
     try{
+        const token = crypto.randomUUID() 
+        const expiredAt = Math.floor((Date.now() + 1000 * 60 * 60 * 24) / 1000) 
         const sql = (
-            `INSERT INTO users (fullname, username, password, create_at, update_at, uuid) VALUES(?, ?, ?, NOW(), NOW(), UUID())`
+            `INSERT INTO users (fullname, username, password, is_blocked, create_at, update_at, uuid) VALUES (?, ?, ?, 0, NOW(), NOW(), UUID())`
         )
         const values = [
             fullname, 

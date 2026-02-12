@@ -5,7 +5,7 @@ export async function POST(request) {
     try{
         const { username, password } = await request.json()
         const [rows] = await db.query(
-            `SELECT id, username, password, role FROM users WHERE username = ? AND password = ?`, 
+            `SELECT id, fullname, username, password, uuid, role FROM users WHERE username = ? AND password = ?`, 
         [username, password]
         )
         if(rows.length === 0){
@@ -13,22 +13,23 @@ export async function POST(request) {
         }
 
         const user = rows[0]
-        const token = crypto.randomUUID()
-        const expiredAt = new Date(Date.now() + 1000 * 60 * 60 * 24)
-
-        await db.query(
-            `UPDATE users SET token = ?, expired_at = ? WHERE id = ?`, [token, expiredAt, user.id]
-        )
-
-        const response = NextResponse.json({message: 'login berhasil bray!', user: user.username, token: token, expired: expiredAt, role: user.role_name}, {status: 200})
-        response.cookies.set('token', user.uuid, {
+        
+        const response = NextResponse.json({
+            message: 'login berhasil bray!',
+            fullname: user.fullname,
+            user: user.username,
+            role: user.role,
+            uuid: user.uuid
+        }, { status: 200 });
+        response.cookies.set('token', String(user.uuid), {
             path: '/',
             httpOnly: true,
             maxAge: 60 * 60 * 24
         })
-        response.cookies.set('role', user.role, {
+        response.cookies.set('role', String(user.role), {
             path: '/',
-            httpOnly: true,
+            httpOnly: false,
+            secure: false,
             maxAge: 60 * 60 * 24
         })
 

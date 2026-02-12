@@ -11,25 +11,27 @@ export async function PUT(request) {
     try{
         const {
             judul, 
-            genre_id, 
+            genre, 
             sinopsis, 
             trailer, 
-            kategori_id, 
+            kategori, 
             casting, 
             durasi, 
-            tahun_rilis
+            tahun_rilis,
+            trivia
         } = await request.json()
         const sql =
-            'UPDATE film SET judul = ?, genre_id = ?, sinopsis = ?, trailer = ?, kategori_id = ?, casting = ?, durasi = ?, tahun_rilis = ? WHERE id = ?'
+            'UPDATE film SET judul = ?, genre = ?, sinopsis = ?, trailer = ?, kategori = ?, casting = ?, durasi = ?, tahun_rilis = ?, trivia = ? WHERE id = ?'
         const values = [
             judul,
-            genre_id, 
+            genre, 
             sinopsis, 
             trailer, 
-            kategori_id,
+            kategori,
             casting,
             durasi, 
             tahun_rilis,
+            trivia,
             id
         ]
         await db.query(sql, values)

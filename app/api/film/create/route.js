@@ -5,29 +5,33 @@ export async function POST(request) {
     try{
         const {
             judul, 
-            genre_id, 
+            genre, 
             sinopsis, 
             trailer, 
-            kategori_id, 
+            kategori,
+            poster,
             casting, 
-            durasi, 
-            tahun_rilis
+            durasi,
+            tahun_rilis,
+            trivia
         } = await request.json()
 
         const sql = `
-            INSERT INTO film (judul, genre_id, sinopsis, trailer, kategori_id, casting, durasi, tahun_rilis) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO film (judul, genre, sinopsis, trailer, kategori, poster, casting, durasi, tahun_rilis, trivia) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `
 
         const values = [
             judul,
-            genre_id, 
+            genre, 
             sinopsis, 
             trailer, 
-            kategori_id,
+            kategori,
+            poster,
             casting,
             durasi, 
-            tahun_rilis
+            tahun_rilis,
+            trivia
         ]
 
         const [result] = await db.query(sql, values)
